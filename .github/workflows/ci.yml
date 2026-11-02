@@ -1,0 +1,55 @@
+name: Build and test
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  windows:
+    runs-on: windows-2025
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
+        with:
+          persist-credentials: false
+      - uses: actions/setup-dotnet@26b0ec14cb23fa6904739307f278c14f94c95bf1 # v5
+        with:
+          global-json-file: global.json
+      - name: Restore pinned dependencies
+        run: dotnet restore CardGrinder.sln --locked-mode
+      - name: Build
+        run: dotnet build CardGrinder.sln -c Release --no-restore -m:1
+      - name: Test
+        run: dotnet test tests/CardGrinder.Tests/CardGrinder.Tests.csproj -c Release --no-build --no-restore --logger trx --results-directory artifacts/test-results
+      - name: Build installer and portable ZIP
+        shell: pwsh
+        run: ./scripts/build-release.ps1
+      - name: Check packaged startup offline
+        shell: pwsh
+        run: |
+          $app = Join-Path $PWD 'artifacts/CardGrinder-win-x64/CardGrinder.exe'
+          $output = Join-Path $PWD 'artifacts/ui-smoke'
+          $process = Start-Process -FilePath $app -ArgumentList @('--smoke-test', ('"' + $output + '"')) -Wait -PassThru -WindowStyle Hidden
+          if ($process.ExitCode -ne 0) { throw 'Packaged UI smoke test failed.' }
+          Get-Content (Join-Path $output 'smoke-test.txt')
+      - name: Verify installer lifecycle
+        shell: pwsh
+        run: ./scripts/test-installer.ps1
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: CardGrinder-Windows
+          path: artifacts/release/*
+          if-no-files-found: error
+          retention-days: 14
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        if: always()
+        with:
+          name: Test-results
+          path: artifacts/test-results/*.trx
+          if-no-files-found: ignore
+          retention-days: 14
