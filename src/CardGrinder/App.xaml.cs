@@ -64,7 +64,7 @@ public partial class App : System.Windows.Application
             model!.SettingsOpen = true;
             await Dispatcher.InvokeAsync(() => { }, DispatcherPriority.ApplicationIdle);
             SaveView(window, Path.Combine(output, "settings.png"));
-            File.WriteAllText(Path.Combine(output, "smoke-test.txt"), bindings.Errors.Count == 0 ? "PASS: Window, compact layout and settings rendered with no binding errors." : string.Join(Environment.NewLine, bindings.Errors));
+            File.WriteAllText(Path.Combine(output, "smoke-test.txt"), bindings.Errors.Count == 0 ? $"PASS: Window, compact layout and settings rendered with no binding errors.\nUpdate edition: {(model.Updates.Installed ? "Installed" : "Portable")}" : string.Join(Environment.NewLine, bindings.Errors));
             if (bindings.Errors.Count > 0) Environment.ExitCode = 1;
         }
         catch (Exception ex) { File.WriteAllText(Path.Combine(output, "smoke-test.txt"), ex.GetType().Name + ": " + ex.Message); Environment.ExitCode = 1; }

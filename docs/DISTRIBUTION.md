@@ -12,6 +12,10 @@ Steam sessions/settings are separate at `%LOCALAPPDATA%\CardGrinder`. They are p
 
 ## Host on your website
 
+CardGrinder is published at [impatus.no](https://impatus.no/programs/cardgrinder).
+For its signed update channel and repeatable website publishing, see
+[UPDATES.md](UPDATES.md).
+
 Upload `artifacts/release/CardGrinder-Setup.exe` to your download directory. This single file contains everything needed for installation; the portable ZIP is an alternative download.
 
 For a link that always points at the latest GitHub release:

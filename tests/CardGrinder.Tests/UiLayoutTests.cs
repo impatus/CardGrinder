@@ -109,6 +109,11 @@ public sealed class UiLayoutTests
                     Assert.True(model.LogoutCommand.CanExecute(null)); Assert.False(model.ConnectCommand.CanExecute(null));
                     Assert.False(model.NewQrCommand.CanExecute(null)); Assert.False(model.StartCommand.CanExecute(null));
                     Assert.Contains("Reconnecting", model.Status);
+                    model.SettingsOpen = true;
+                    await dispatcher.InvokeAsync(() => { }, DispatcherPriority.ApplicationIdle);
+                    Assert.Contains("Updates", FindText((DependencyObject)window.Content));
+                    Assert.Contains(FindElements<Button>(window), button => Equals(button.Content, "Check for updates") && button.IsEnabled);
+                    Assert.Contains("Portable", model.Updates.CurrentVersion);
                     Assert.Empty(listener.Errors);
                 }
                 catch (Exception ex) { error = ex; }

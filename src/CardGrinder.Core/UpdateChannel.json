@@ -1,0 +1,5 @@
+{
+  "publicKeyPem": "-----BEGIN PUBLIC KEY-----\nMIIBojANBgkqhkiG9w0BAQEFAAOCAY8AMIIBigKCAYEAyGGMnandAS9zT0c9ZQ17\nkOJjYScZNH08qzxWX02isRIx+bWniJEIX5yKB9y7UgjVpdisSWZ/MlvhVGhBcu4M\nCn6ZqvoVgbjkD34ZuR850nGZGjH1qarKMuN+6NAsGyukvRRrj3ES8zGvKxumLx2S\ngHwOGtwS6H5G7AgATAhMUENOIgDw9C9dIhOzFWXWrqfrbUi7feF+dCNTAhMj3YK/\n9b53AlqCnTbzGYjZTObFaQLkJQHs656CJvNRW+I+HpAqXkETM7GHrjwBD2B12Dtp\nhk2NBcPqMp1ONXvZ6c587+sf9dvQapw7YqF+OGwPGFa2IuaQrKTSzYa9JQX6gRkt\nbLexjkLIruS13CIJ/00uM1FpGCkNZ/ihdZsHx1JlaWEJfTVIzRzwNnLYMEuJzb7F\nXlkGHcgU4CgaEv555QdQ2+XOkj09WsNXOYuH8S8S48RYGNnJ8BabJaQdA/C+199H\n/rBeY0ayjSe28TMZfbSmv4MHlcaeoysH3LPlf3oXsWHlAgMBAAE=\n-----END PUBLIC KEY-----",
+  "enabled": true,
+  "manifestUrl": "https://impatus.no/uploads/cardgrinder/latest.json"
+}

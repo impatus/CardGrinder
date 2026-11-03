@@ -34,6 +34,7 @@ try {
     if ($taskProcess.ExitCode -ne 0) { throw 'The installed application did not pass its offline startup check.' }
     $taskSmokeResult = Get-Content -LiteralPath (Join-Path $taskSmokeDir 'smoke-test.txt') -Raw
     if (-not $taskSmokeResult.StartsWith('PASS:')) { throw 'The installed application reported UI binding errors.' }
+    if ($taskSmokeResult -notmatch 'Update edition: Installed') { throw 'The updater did not recognize the installed edition.' }
 } finally {
     $taskUninstaller = Join-Path $taskInstallDir 'unins000.exe'
     if (Test-Path -LiteralPath $taskUninstaller) {

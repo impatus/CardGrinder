@@ -1,0 +1,13 @@
+{
+  "id": "cardgrinder",
+  "game": "programs",
+  "kind": "program",
+  "title": "CardGrinder",
+  "version": "0.3.0",
+  "summary": "A little less grind. Find remaining Steam trading card drops and let CardGrinder work through your games in the background.",
+  "description": "CardGrinder is a focused Windows app for collecting the Steam trading card drops remaining in games you own. Sign in with Steam Guard, select your games and let the queue run in the background.\n\nSee which game is farming, track confirmed drops, select all games at once and pause or resume whenever you like. Your login is remembered securely, temporary network interruptions trigger automatic reconnection, and Settings includes signed update checks.\n\nFree and open source under the MIT licence. Available as an installer or portable ZIP for Windows 11, 64-bit, with the required runtime included. CardGrinder is independent of Valve; Steam determines drop availability and timing.",
+  "download_url": "",
+  "download_file": "/uploads/cardgrinder/CardGrinder-0.3.0-Setup-x64.exe",
+  "images": ["/uploads/cardgrinder/CardGrinder-0.3.0.png"],
+  "tags": ["windows", "steam", "trading cards", "open source", "portable"]
+}

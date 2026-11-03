@@ -47,6 +47,7 @@ public sealed class MainViewModel : ObservableObject, IAsyncDisposable
     public RelayCommand SettingsCommand { get; }
     public RelayCommand DismissErrorCommand { get; }
     public RelayCommand SelectAllCommand { get; }
+    public UpdatesViewModel Updates { get; }
     public bool Busy { get => busy; private set { if (Set(ref busy, value)) { NotifyCommands(); RaiseLibraryStatus(); } } }
     public bool SigningIn { get => signingIn; private set => Set(ref signingIn, value); }
     public bool SettingsOpen { get => settingsOpen; set => Set(ref settingsOpen, value); }
@@ -114,6 +115,7 @@ public sealed class MainViewModel : ObservableObject, IAsyncDisposable
         this.storage = storage; this.dispatcher = dispatcher;
         settings = storage.LoadSettings();
         session = new(storage); library = new(session); engine = new(session, library);
+        Updates = new(async () => { await engine.StopAsync(lifetime.Token); }, () => !Busy && !SigningIn);
         GamesView = CollectionViewSource.GetDefaultView(Games);
         GamesView.Filter = item => item is GameViewModel g && (ShowCompleted || g.Remaining > 0) && (string.IsNullOrWhiteSpace(Search) || g.Name.Contains(Search, StringComparison.OrdinalIgnoreCase) || g.AppId.ToString().Contains(Search));
         ApplySort();
@@ -243,11 +245,12 @@ public sealed class MainViewModel : ObservableObject, IAsyncDisposable
     private void OnUi(Action action) { if (!dispatcher.HasShutdownStarted) dispatcher.BeginInvoke(action); }
     private void NotifyCommands()
     {
+        Updates?.NotifyCommands();
         foreach (var command in new[] { ConnectCommand, NewQrCommand, LogoutCommand, RefreshCommand, StartCommand, PauseCommand, ResumeCommand, StopCommand }) command?.Notify();
     }
     public async ValueTask DisposeAsync()
     {
-        clock.Stop(); lifetime.Cancel();
+        clock.Stop(); lifetime.Cancel(); Updates.Dispose();
         // Let a cancelled login release the session gate before orderly shutdown.
         await engine.DisposeAsync();
         await session.DisposeAsync(); library.Dispose(); lifetime.Dispose();

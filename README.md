@@ -19,6 +19,7 @@ Windows 11 x64 is required. The installer includes the .NET 10 LTS runtime, runs
 - Active games at the top, confirmed card progress, session totals and elapsed active time.
 - Pause/Resume/Stop, tray controls and orderly shutdown.
 - Bounded reconnection after temporary network/VPN interruptions, with card status checked before resuming.
+- Manual, signed update checks in Settings with verified installer or portable ZIP downloads.
 
 ## Getting started
 
@@ -34,7 +35,7 @@ Only games with drops appear by default. **Show completed** includes explicitly 
 
 No password is collected. A remembered account name and refresh token are encrypted with Windows DPAPI for the current user at `%LOCALAPPDATA%\CardGrinder\session.bin`. Nonsecret preferences live alongside it in `settings.json`. **Sign out** removes the remembered session. Updates and uninstall/reinstall preserve local settings and remembered sessions; sign out first if you want the session removed.
 
-There is no telemetry, analytics, crash upload, third-party backend, trading or Market automation. Runtime connections go to Steam infrastructure, Steam Community and Steam artwork hosts. A separate SteamKit2 connection reports selected AppIDs; game executables are never launched or modified. No code injection, achievement/stat modification, anti-cheat manipulation or game-server connection is implemented.
+There is no telemetry, analytics, crash upload, trading or Market automation. Runtime connections go to Steam infrastructure, Steam Community and Steam artwork hosts. Using **Settings > Updates** also contacts the signed update channel at impatus.no. A separate SteamKit2 connection reports selected AppIDs; game executables are never launched or modified. No code injection, achievement/stat modification, anti-cheat manipulation or game-server connection is implemented.
 
 Card status is checked every three minutes while farming. Progress uses confirmed reductions in remaining drops, never a timer or predicted ETA. Steam can delay its own updates. Unknown/missing queued-game status pauses farming rather than assuming cards were received.
 

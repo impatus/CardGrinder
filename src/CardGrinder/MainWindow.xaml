@@ -285,23 +285,43 @@
       </StackPanel>
     </Grid>
     <Border Grid.ColumnSpan="2" Background="#D9101317" Visibility="{Binding SettingsOpen, Converter={StaticResource BoolVisibility}}">
-      <Border Width="470" Padding="30" CornerRadius="8" Background="#1A2129" BorderBrush="#35404D" BorderThickness="1" VerticalAlignment="Center" HorizontalAlignment="Center">
-        <StackPanel>
-          <Grid>
-            <TextBlock Text="Settings" FontSize="25" FontWeight="SemiBold" />
-            <Button Content="×" Command="{Binding SettingsCommand}" HorizontalAlignment="Right" Padding="9,2" Background="Transparent" BorderThickness="0" AutomationProperties.Name="Close settings" />
-          </Grid>
-          <TextBlock Text="Small preferences. Nothing extra." Style="{StaticResource MutedText}" Margin="0,8,0,23" />
-          <CheckBox Content="Start minimized" IsChecked="{Binding StartMinimized}" Margin="0,10" />
-          <CheckBox Content="Minimize to system tray" IsChecked="{Binding MinimizeToTray}" Margin="0,10" />
-          <CheckBox Content="Automatically advance the farming queue" IsChecked="{Binding AutomaticQueue}" Margin="0,10" />
-          <CheckBox Content="Allow waiting for eligible playtime" IsChecked="{Binding WaitForEligiblePlaytime}" Margin="0,10" />
-          <TextBlock Text="If disabled, selections with games under 2 hours of playtime cannot start. Steam determines actual drop eligibility; no minimum can be guaranteed." FontSize="11" Style="{StaticResource MutedText}" Margin="22,0,0,20" LineHeight="18" />
-          <Border BorderBrush="#35404D" BorderThickness="0,1,0,0" Padding="0,18,0,0">
-            <TextBlock Text="CardGrinder uses a separate Steam connection. Third-party automation is not guaranteed to be permitted by Valve and is not risk-free." FontSize="11" Foreground="#B6AE96" LineHeight="19" />
-          </Border>
-          <Button Content="Done" Command="{Binding SettingsCommand}" Style="{StaticResource PrimaryButton}" HorizontalAlignment="Right" Margin="0,23,0,0" />
-        </StackPanel>
+      <Border Width="520" MaxHeight="620" Margin="0,20" Padding="30" CornerRadius="8" Background="#1A2129" BorderBrush="#35404D" BorderThickness="1" VerticalAlignment="Center" HorizontalAlignment="Center">
+        <ScrollViewer VerticalScrollBarVisibility="Auto">
+          <StackPanel>
+            <Grid>
+              <TextBlock Text="Settings" FontSize="25" FontWeight="SemiBold" />
+              <Button Content="×" Command="{Binding SettingsCommand}" HorizontalAlignment="Right" Padding="9,2" Background="Transparent" BorderThickness="0" AutomationProperties.Name="Close settings" />
+            </Grid>
+            <TextBlock Text="Small preferences. Nothing extra." Style="{StaticResource MutedText}" Margin="0,8,0,23" />
+            <CheckBox Content="Start minimized" IsChecked="{Binding StartMinimized}" Margin="0,10" />
+            <CheckBox Content="Minimize to system tray" IsChecked="{Binding MinimizeToTray}" Margin="0,10" />
+            <CheckBox Content="Automatically advance the farming queue" IsChecked="{Binding AutomaticQueue}" Margin="0,10" />
+            <CheckBox Content="Allow waiting for eligible playtime" IsChecked="{Binding WaitForEligiblePlaytime}" Margin="0,10" />
+            <TextBlock Text="If disabled, selections with games under 2 hours of playtime cannot start. Steam determines actual drop eligibility; no minimum can be guaranteed." FontSize="11" Style="{StaticResource MutedText}" Margin="22,0,0,20" LineHeight="18" />
+            <Border BorderBrush="#35404D" BorderThickness="0,1,0,0" Padding="0,16,0,18" DataContext="{Binding Updates}">
+              <StackPanel>
+                <TextBlock Text="Updates" FontSize="17" FontWeight="SemiBold" />
+                <TextBlock Text="{Binding CurrentVersion}" Style="{StaticResource MutedText}" FontSize="11" Margin="0,6,0,10" />
+                <TextBlock Text="{Binding Status}" TextWrapping="Wrap" FontSize="12" LineHeight="18" />
+                <ScrollViewer MaxHeight="110" VerticalScrollBarVisibility="Auto" Margin="0,8,0,0">
+                  <TextBlock Text="{Binding Notes}" TextWrapping="Wrap" Style="{StaticResource MutedText}" FontSize="11" />
+                </ScrollViewer>
+                <ProgressBar Value="{Binding Progress, Mode=OneWay}" Maximum="100" Height="3" Margin="0,9,0,0" Visibility="{Binding Busy, Converter={StaticResource BoolVisibility}}" />
+                <WrapPanel Margin="0,12,0,0">
+                  <Button Content="Check for updates" Command="{Binding CheckCommand}" Padding="12,7" Margin="0,0,6,6" />
+                  <Button Content="Download update" Command="{Binding DownloadCommand}" Padding="12,7" Margin="0,0,6,6" Visibility="{Binding Available, Converter={StaticResource BoolVisibility}}" />
+                  <Button Content="{Binding InstallLabel}" Command="{Binding InstallCommand}" Style="{StaticResource PrimaryButton}" Padding="12,7" Margin="0,0,6,6" Visibility="{Binding Ready, Converter={StaticResource BoolVisibility}}" />
+                  <Button Content="Cancel" Command="{Binding CancelCommand}" Padding="12,7" Margin="0,0,0,6" Visibility="{Binding Busy, Converter={StaticResource BoolVisibility}}" />
+                </WrapPanel>
+                <TextBlock Text="Checks are manual. Downloads are signature-verified. Windows may still show an unknown publisher warning." Style="{StaticResource MutedText}" FontSize="10" TextWrapping="Wrap" Margin="0,3,0,0" />
+              </StackPanel>
+            </Border>
+            <Border BorderBrush="#35404D" BorderThickness="0,1,0,0" Padding="0,18,0,0">
+              <TextBlock Text="CardGrinder uses a separate Steam connection. Third-party automation is not guaranteed to be permitted by Valve and is not risk-free." FontSize="11" Foreground="#B6AE96" LineHeight="19" />
+            </Border>
+            <Button Content="Done" Command="{Binding SettingsCommand}" Style="{StaticResource PrimaryButton}" HorizontalAlignment="Right" Margin="0,23,0,0" />
+          </StackPanel>
+        </ScrollViewer>
       </Border>
     </Border>
     <Border Grid.ColumnSpan="2" Background="#ED101317" Visibility="{Binding SigningIn, Converter={StaticResource BoolVisibility}}">

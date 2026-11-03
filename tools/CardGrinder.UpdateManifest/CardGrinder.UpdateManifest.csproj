@@ -1,0 +1,9 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="../../src/CardGrinder.Core/AppUpdateService.cs" Link="AppUpdateService.cs" />
+    <Compile Include="../../src/CardGrinder.Core/UpdateChannel.cs" Link="UpdateChannel.cs" />
+  </ItemGroup>
+</Project>
