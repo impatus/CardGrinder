@@ -6,6 +6,6 @@ The latest published release is the supported version. CardGrinder uses a self-c
 
 The application stores a remembered session with Windows DPAPI for the current user. It does not provide isolation from other programs already running as that same Windows user. The repository and release assets must never contain `session.bin`, signing certificates or private diagnostic captures.
 
-Releases are currently unsigned. SHA-256 checksums detect download corruption; they are not a publisher signature. Do not disable Windows security software to install this application.
+Windows executables currently have no Authenticode publisher signature. The in-app update channel separately verifies RSA-PSS-signed release metadata using an embedded public key, then checks each download's signed size and SHA-256 before use. Standalone SHA-256 checksum files detect corruption but do not establish publisher identity. Do not disable Windows security software to install this application. See [UPDATES.md](docs/UPDATES.md) for signing-key handling and publication.
 
 CardGrinder makes no guarantee about Valve's acceptance of third-party automation or VAC safety. Steam authentication, playing-session restrictions and rate limits are respected.
